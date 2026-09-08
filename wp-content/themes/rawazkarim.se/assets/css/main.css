@@ -10,7 +10,7 @@
    ============================================ */
 @font-face {
 	font-family: 'Fraunces';
-	src: url('https://rawkar.github.io/wp-content/themes/rawazkarim.se/assets/fonts/fraunces-latin-var.woff2') format('woff2-variations');
+	src: url('https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/fonts/fraunces-latin-var.woff2') format('woff2-variations');
 	font-weight: 600 700;
 	font-style: normal;
 	font-display: swap;
@@ -18,7 +18,7 @@
 
 @font-face {
 	font-family: 'Inter';
-	src: url('https://rawkar.github.io/wp-content/themes/rawazkarim.se/assets/fonts/inter-latin-var.woff2') format('woff2-variations');
+	src: url('https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/fonts/inter-latin-var.woff2') format('woff2-variations');
 	font-weight: 400 500;
 	font-style: normal;
 	font-display: swap;
