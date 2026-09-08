@@ -1360,6 +1360,16 @@ textarea:focus-visible {
 	}
 }
 
+/* Kontaktlänk sist i en sektion, samma stil som i anlita-sektionen */
+.section-link {
+	margin-top: var(--space-lg);
+	text-align: center;
+}
+
+.contact__cta {
+	margin: 0 0 var(--space-md);
+}
+
 /* ============================================
    Kontakt
    ============================================ */

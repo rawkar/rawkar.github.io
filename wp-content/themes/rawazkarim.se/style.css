@@ -1,0 +1,22 @@
+/*
+Theme Name: Rawaz Portfolio
+Theme URI: https://rawazkarim.se
+Author: Rawaz Karim
+Author URI: https://rawazkarim.se
+Description: Custom WordPress theme for Rawaz Karim, kommunikationskonsult i Stockholm. One-pager med tjänster, projekt, omdömen och artikelsektionen Anteckningar.
+Version: 2.0.0
+Requires at least: 5.0
+Tested up to: 6.4
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: rawaz-portfolio
+Domain Path: /languages
+Tags: portfolio, business, custom-post-type, seo-optimized, responsive, translation-ready
+*/
+
+/* 
+ * This file is required by WordPress for theme identification.
+ * Main styles are located in /assets/css/main.css
+ */
+
