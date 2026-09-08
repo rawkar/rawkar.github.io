@@ -1,0 +1,1944 @@
+/**
+ * Main Stylesheet
+ *
+ * @package RawazPortfolio
+ * @since 2.0.0
+ */
+
+/* ============================================
+   Fonts - självhostade woff2 (variabla)
+   ============================================ */
+@font-face {
+	font-family: 'Fraunces';
+	src: url('https://rawkar.github.io/wp-content/themes/rawazkarim.se/assets/fonts/fraunces-latin-var.woff2') format('woff2-variations');
+	font-weight: 600 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Inter';
+	src: url('https://rawkar.github.io/wp-content/themes/rawazkarim.se/assets/fonts/inter-latin-var.woff2') format('woff2-variations');
+	font-weight: 400 500;
+	font-style: normal;
+	font-display: swap;
+}
+
+/* ============================================
+   CSS Variables - Design System
+   ============================================ */
+:root {
+	/* Colors - mörk bas med en accentfärg */
+	--color-background: #0f0f11;
+	--color-surface: #1a1a1e;
+	--color-text: #f4f4f5;
+	--color-text-light: #a1a1aa;
+	--color-text-muted: #8a8a93;
+	--color-accent: #e0b27a;
+	--color-on-accent: #1c1408;
+	--color-border: rgba(255, 255, 255, 0.08);
+	--color-border-strong: rgba(255, 255, 255, 0.16);
+
+	/* Bakåtkompatibla alias (används i äldre delar av temat) */
+	--color-primary: var(--color-background);
+	--color-secondary: var(--color-text);
+	--color-background-alt: var(--color-surface);
+	--color-overlay: rgba(0, 0, 0, 0.5);
+	--color-overlay-dark: rgba(0, 0, 0, 0.8);
+	--color-dark-primary: var(--color-background);
+	--color-dark-secondary: var(--color-surface);
+	--color-dark-tertiary: #222227;
+
+	/* Typography */
+	--font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+	--font-heading: 'Fraunces', Georgia, 'Times New Roman', serif;
+
+	/* Typskala (desktop enligt brief, skalar ner på mobil) */
+	--text-hero: clamp(2.5rem, 6vw + 0.5rem, 4.5rem);      /* 40-72 px */
+	--text-h2: clamp(2rem, 3vw + 1rem, 3rem);              /* 32-48 px */
+	--text-h3: 1.5rem;                                      /* 24 px */
+	--text-body: 1.125rem;                                  /* 18 px */
+	--text-lead: clamp(1.125rem, 1vw + 0.85rem, 1.375rem); /* 18-22 px */
+	--text-small: 0.9375rem;
+
+	/* Spacing System */
+	--space-xs: 0.5rem;
+	--space-sm: 1rem;
+	--space-md: 2rem;
+	--space-lg: 4rem;
+	--space-xl: 6rem;
+	--space-xxl: 8rem;
+
+	/* Layout */
+	--container-width: 1200px;
+	--container-narrow: 780px;
+	--border-radius: 8px;
+	--border-radius-lg: 16px;
+	--header-height: 88px;
+	--transition-speed: 0.3s;
+	--transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+	/* Shadows */
+	--shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+	--shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+	--shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+	--shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+/* ============================================
+   Reset & Base Styles
+   ============================================ */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-size: 16px;
+	overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		scroll-behavior: smooth;
+	}
+}
+
+body {
+	font-family: var(--font-primary);
+	font-size: var(--text-body);
+	font-weight: 400;
+	line-height: 1.6;
+	color: var(--color-text);
+	background-color: var(--color-background);
+	overflow-x: hidden;
+	max-width: 100vw;
+	-webkit-font-smoothing: antialiased;
+}
+
+body.menu-open,
+body.modal-open {
+	overflow: hidden;
+}
+
+/* Ankare hamnar inte under den fasta headern */
+[id] {
+	scroll-margin-top: calc(var(--header-height) + 1rem);
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--font-heading);
+	font-weight: 600;
+	line-height: 1.15;
+	margin-bottom: var(--space-md);
+	color: var(--color-text);
+}
+
+h1 { font-size: var(--text-hero); line-height: 1.05; }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); line-height: 1.3; }
+h4 { font-size: 1.25rem; font-family: var(--font-primary); font-weight: 500; }
+
+p {
+	margin-bottom: var(--space-sm);
+	max-width: 65ch;
+}
+
+a {
+	color: var(--color-text);
+	text-decoration: none;
+	transition: color var(--transition-speed) var(--transition-ease);
+}
+
+a:hover {
+	color: var(--color-accent);
+}
+
+/* Synligt fokusläge på alla interaktiva element */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 3px;
+	border-radius: 2px;
+}
+
+/* Löpande länkar i brödtext */
+.blog-post__content a,
+.about__text a {
+	color: var(--color-accent);
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+.blog-post__content a:hover,
+.about__text a:hover {
+	color: var(--color-text);
+}
+
+::selection {
+	background-color: var(--color-accent);
+	color: var(--color-on-accent);
+}
+
+/* ============================================
+   Container & Layout
+   ============================================ */
+.container {
+	width: 100%;
+	max-width: var(--container-width);
+	margin: 0 auto;
+	padding: 0 var(--space-md);
+}
+
+.container--narrow {
+	max-width: var(--container-narrow);
+}
+
+.container--full {
+	max-width: 100%;
+	padding: 0;
+}
+
+.section-padding {
+	padding: var(--space-xl) 0;
+}
+
+@media (max-width: 768px) {
+	.section-padding {
+		padding: var(--space-lg) 0;
+	}
+}
+
+.text-center {
+	text-align: center;
+}
+
+/* ============================================
+   Buttons
+   ============================================ */
+.btn {
+	display: inline-block;
+	padding: 14px 32px;
+	font-family: var(--font-primary);
+	font-size: 1rem;
+	font-weight: 500;
+	text-align: center;
+	border: 1px solid transparent;
+	border-radius: 50px;
+	cursor: pointer;
+	transition: background-color var(--transition-speed) var(--transition-ease),
+		border-color var(--transition-speed) var(--transition-ease),
+		color var(--transition-speed) var(--transition-ease);
+	text-decoration: none;
+}
+
+.btn--primary {
+	background-color: var(--color-accent);
+	color: var(--color-on-accent);
+}
+
+.btn--primary:hover,
+.btn--primary:focus {
+	background-color: #ecc492;
+	color: var(--color-on-accent);
+}
+
+.btn--secondary {
+	background-color: transparent;
+	color: var(--color-text);
+	border-color: var(--color-border-strong);
+}
+
+.btn--secondary:hover,
+.btn--secondary:focus {
+	border-color: var(--color-accent);
+	color: var(--color-accent);
+}
+
+.btn--ghost {
+	background-color: transparent;
+	color: var(--color-text);
+	border-color: var(--color-text);
+}
+
+.btn--ghost:hover,
+.btn--ghost:focus {
+	background-color: var(--color-text);
+	color: var(--color-background);
+}
+
+.btn--large {
+	padding: 18px 40px;
+	font-size: 1.0625rem;
+}
+
+.btn--small {
+	padding: 10px 22px;
+	font-size: 0.9375rem;
+}
+
+/* Link with arrow */
+.link-arrow {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 1rem;
+	font-weight: 500;
+	color: var(--color-accent);
+	transition: color var(--transition-speed);
+}
+
+.link-arrow:hover {
+	color: var(--color-text);
+}
+
+.link-arrow svg {
+	width: 16px;
+	height: 16px;
+}
+
+/* ============================================
+   Taggar - små pills
+   ============================================ */
+.tag-pill {
+	display: inline-block;
+	padding: 4px 14px;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid var(--color-border-strong);
+	border-radius: 50px;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: var(--color-text-light);
+}
+
+/* ============================================
+   Header & Navigation
+   ============================================ */
+.site-header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 1000;
+	padding: var(--space-sm) var(--space-md);
+	transition: background-color var(--transition-speed) var(--transition-ease),
+		box-shadow var(--transition-speed) var(--transition-ease);
+}
+
+.site-header--scrolled {
+	background-color: rgba(15, 15, 17, 0.9);
+	-webkit-backdrop-filter: blur(12px);
+	backdrop-filter: blur(12px);
+	box-shadow: 0 1px 0 var(--color-border);
+}
+
+.site-header-inner {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	max-width: var(--container-width);
+	margin: 0 auto;
+	min-height: 56px;
+}
+
+/* Logo - Left */
+.site-logo {
+	display: flex;
+	align-items: center;
+	z-index: 1001;
+}
+
+.site-logo a {
+	display: block;
+	line-height: 0;
+}
+
+.site-logo__image {
+	max-height: 48px;
+	width: auto;
+	height: auto;
+	transition: opacity var(--transition-speed);
+}
+
+.site-logo__image:hover {
+	opacity: 0.85;
+}
+
+/* Navigation */
+.main-navigation {
+	display: flex;
+	align-items: center;
+}
+
+#primary-menu {
+	display: flex;
+	align-items: center;
+	gap: var(--space-md);
+	list-style: none;
+}
+
+#primary-menu a {
+	font-size: 1rem;
+	font-weight: 500;
+	color: var(--color-text);
+	padding: 6px 2px;
+}
+
+#primary-menu a:hover {
+	color: var(--color-accent);
+}
+
+#primary-menu .current-menu-item > a,
+#primary-menu .current_page_item > a {
+	color: var(--color-accent);
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+	display: none;
+	background: none;
+	border: none;
+	cursor: pointer;
+	padding: var(--space-xs);
+	width: 44px;
+	height: 44px;
+	position: relative;
+	z-index: 1001;
+}
+
+.menu-icon {
+	display: block;
+	width: 24px;
+	height: 2px;
+	background-color: var(--color-text);
+	position: relative;
+	transition: background-color var(--transition-speed);
+	margin: 0 auto;
+}
+
+.menu-icon::before,
+.menu-icon::after {
+	content: '';
+	position: absolute;
+	width: 24px;
+	height: 2px;
+	background-color: var(--color-text);
+	left: 0;
+	transition: all var(--transition-speed) var(--transition-ease);
+}
+
+.menu-icon::before { top: -8px; }
+.menu-icon::after { bottom: -8px; }
+
+.menu-toggle.active .menu-icon { background-color: transparent; }
+.menu-toggle.active .menu-icon::before { top: 0; transform: rotate(45deg); }
+.menu-toggle.active .menu-icon::after { bottom: 0; transform: rotate(-45deg); }
+
+@media (max-width: 900px) {
+	.menu-toggle {
+		display: block;
+	}
+
+	#primary-menu {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: rgba(15, 15, 17, 0.98);
+		flex-direction: column;
+		justify-content: center;
+		gap: var(--space-md);
+		text-align: center;
+	}
+
+	#primary-menu.active {
+		display: flex;
+	}
+
+	#primary-menu a {
+		font-size: 1.5rem;
+		font-family: var(--font-heading);
+		font-weight: 600;
+	}
+}
+
+/* ============================================
+   Social Icons - Fixed Right Side
+   ============================================ */
+.social-icons-fixed {
+	position: fixed;
+	right: 32px;
+	top: 50%;
+	transform: translateY(-50%);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-md);
+	z-index: 100;
+}
+
+.social-icons-fixed a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	height: 40px;
+	color: var(--color-text-light);
+	transition: color var(--transition-speed);
+}
+
+.social-icons-fixed a:hover {
+	color: var(--color-accent);
+}
+
+.social-icons-fixed svg {
+	width: 20px;
+	height: 20px;
+}
+
+@media (max-width: 1024px) {
+	.social-icons-fixed {
+		display: none;
+	}
+}
+
+/* ============================================
+   Hero Section
+   ============================================ */
+.hero {
+	position: relative;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	background-color: var(--color-background);
+	padding: calc(var(--header-height) + var(--space-md)) 0 var(--space-xl);
+}
+
+.hero__background {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 0;
+}
+
+.hero__background img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	will-change: transform;
+}
+
+/* Mörk gradient över bilden, starkare längst ner */
+.hero__overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(
+		180deg,
+		rgba(15, 15, 17, 0.6) 0%,
+		rgba(15, 15, 17, 0.86) 22%,
+		rgba(15, 15, 17, 0.86) 68%,
+		rgba(15, 15, 17, 0.94) 88%,
+		rgba(15, 15, 17, 1) 100%
+	);
+	z-index: 1;
+}
+
+.hero__content {
+	position: relative;
+	z-index: 2;
+	text-align: center;
+	padding: var(--space-md);
+	max-width: 880px;
+}
+
+.hero__eyebrow {
+	display: block;
+	font-size: 1rem;
+	font-weight: 500;
+	color: var(--color-text-light);
+	margin: 0 auto var(--space-md) auto;
+}
+
+.hero__title {
+	font-family: var(--font-heading);
+	font-size: var(--text-hero);
+	font-weight: 650;
+	color: var(--color-text);
+	margin: 0 auto var(--space-md) auto;
+	line-height: 1.05;
+	max-width: 20ch;
+	text-wrap: balance;
+}
+
+/* Rörelsen i rubriken: "nå ut" dämpat och streckat, "nå fram" i accentfärg och helt.
+   Färgen bär inte betydelsen ensam, texten fungerar utan markering. */
+.hero-from,
+.hero-to {
+	white-space: nowrap;
+	text-decoration-line: underline;
+	text-decoration-thickness: 0.05em;
+	text-underline-offset: 0.16em;
+}
+
+.hero-from {
+	color: var(--color-text-light);
+	text-decoration-style: dashed;
+	text-decoration-color: var(--color-text-light);
+}
+
+.hero-to {
+	color: var(--color-accent);
+	text-decoration-style: solid;
+	text-decoration-thickness: 0.07em;
+	text-decoration-color: var(--color-accent);
+}
+
+.hero__subtitle {
+	font-family: var(--font-primary);
+	font-size: var(--text-lead);
+	font-weight: 400;
+	color: var(--color-text-light);
+	margin: 0 auto var(--space-lg) auto;
+	line-height: 1.6;
+	max-width: 58ch;
+}
+
+.hero__cta {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: var(--space-md);
+	flex-wrap: wrap;
+}
+
+.hero__secondary-link {
+	font-size: 1rem;
+	font-weight: 500;
+	color: var(--color-text);
+	text-decoration: underline;
+	text-underline-offset: 4px;
+	text-decoration-color: var(--color-accent);
+}
+
+.hero__secondary-link:hover {
+	color: var(--color-accent);
+}
+
+/* Hero Bottom Info */
+.hero__bottom {
+	position: absolute;
+	bottom: 32px;
+	left: 0;
+	right: 0;
+	z-index: 2;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.hero__location {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 0.9375rem;
+	color: var(--color-text-light);
+}
+
+.hero__location svg {
+	width: 16px;
+	height: 16px;
+}
+
+/* ============================================
+   Section Headers
+   ============================================ */
+.section-header {
+	text-align: center;
+	margin-bottom: var(--space-lg);
+}
+
+.section-title {
+	font-family: var(--font-heading);
+	font-size: var(--text-h2);
+	font-weight: 600;
+	color: var(--color-text);
+	margin-bottom: var(--space-sm);
+}
+
+.section-intro {
+	font-size: var(--text-lead);
+	color: var(--color-text-light);
+	max-width: 58ch;
+	margin: 0 auto;
+	line-height: 1.6;
+}
+
+/* ============================================
+   Tjänster - fyra likvärdiga kort
+   ============================================ */
+.services-section {
+	background-color: var(--color-background);
+	padding: var(--space-xl) 0;
+}
+
+.services__grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: var(--space-md);
+	margin-top: var(--space-lg);
+}
+
+.service-card {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-lg);
+	padding: var(--space-md);
+	display: flex;
+	flex-direction: column;
+	transition: border-color var(--transition-speed) var(--transition-ease);
+}
+
+.service-card:hover {
+	border-color: var(--color-border-strong);
+}
+
+.service-card__title {
+	font-size: var(--text-h3);
+	margin-bottom: var(--space-sm);
+}
+
+.service-card__description {
+	font-size: var(--text-body);
+	line-height: 1.6;
+	color: var(--color-text-light);
+	margin-bottom: var(--space-sm);
+}
+
+/* Utfällbar del - native details/summary */
+.service-card__details {
+	margin-top: auto;
+	border-top: 1px solid var(--color-border);
+	padding-top: var(--space-sm);
+}
+
+.service-card__details summary {
+	cursor: pointer;
+	font-weight: 500;
+	font-size: 1rem;
+	color: var(--color-accent);
+	list-style: none;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 4px 0;
+}
+
+.service-card__details summary::-webkit-details-marker {
+	display: none;
+}
+
+.service-card__details summary::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-right: 2px solid var(--color-accent);
+	border-bottom: 2px solid var(--color-accent);
+	transform: rotate(45deg);
+	transition: transform var(--transition-speed);
+	flex-shrink: 0;
+	margin-top: -4px;
+}
+
+.service-card__details[open] summary::before {
+	transform: rotate(225deg);
+	margin-top: 4px;
+}
+
+.service-card__details ul {
+	list-style: none;
+	margin: var(--space-sm) 0 0;
+	padding: 0;
+}
+
+.service-card__details li {
+	position: relative;
+	padding-left: 22px;
+	margin-bottom: 10px;
+	font-size: var(--text-small);
+	line-height: 1.5;
+	color: var(--color-text-light);
+}
+
+.service-card__details li::before {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 0.55em;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background-color: var(--color-accent);
+}
+
+/* Text under korten */
+.services__note {
+	margin: var(--space-lg) auto 0;
+	max-width: 58ch;
+	text-align: center;
+	font-size: var(--text-small);
+	color: var(--color-text-light);
+	line-height: 1.6;
+}
+
+@media (max-width: 900px) {
+	.services__grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ============================================
+   Så kan du anlita mig
+   ============================================ */
+.anlita-section {
+	background-color: var(--color-background);
+	padding: var(--space-xl) 0;
+}
+
+.anlita__grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--space-md);
+	margin-top: var(--space-lg);
+}
+
+.anlita__item h3 {
+	font-size: var(--text-h3);
+	margin-bottom: var(--space-sm);
+}
+
+.anlita__item p {
+	font-size: var(--text-body);
+	color: var(--color-text-light);
+	line-height: 1.6;
+}
+
+.anlita__link {
+	text-align: center;
+	margin-top: var(--space-lg);
+}
+
+@media (max-width: 900px) {
+	.anlita__grid {
+		grid-template-columns: 1fr;
+		gap: var(--space-lg);
+	}
+}
+
+/* ============================================
+   Projekt
+   ============================================ */
+.portfolio-section {
+	background-color: var(--color-background);
+	padding: var(--space-xl) 0;
+}
+
+.portfolio__grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--space-md);
+	margin-top: var(--space-lg);
+}
+
+.portfolio-card {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-lg);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	transition: border-color var(--transition-speed) var(--transition-ease);
+}
+
+.portfolio-card:hover {
+	border-color: var(--color-border-strong);
+}
+
+.portfolio-card__image-wrapper {
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+	background-color: var(--color-dark-tertiary);
+}
+
+.portfolio-card__image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: top center;
+}
+
+/* Platshållare när skärmbild saknas */
+.portfolio-card__placeholder {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: var(--font-heading);
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--color-text-muted);
+}
+
+.portfolio-card__content {
+	padding: var(--space-md);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-sm);
+	flex: 1;
+}
+
+.portfolio-card__title {
+	font-size: var(--text-h3);
+	margin: 0;
+}
+
+.portfolio-card__description {
+	font-size: var(--text-small);
+	color: var(--color-text-light);
+	line-height: 1.6;
+	margin: 0;
+}
+
+.portfolio-card__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.portfolio-card__link {
+	margin-top: auto;
+	padding-top: var(--space-xs);
+}
+
+@media (max-width: 1024px) {
+	.portfolio__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 768px) {
+	.portfolio__grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ============================================
+   Omdömen
+   ============================================ */
+.testimonials-section {
+	background-color: var(--color-background);
+}
+
+.testimonials__grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: var(--space-md);
+	margin-top: var(--space-lg);
+	max-width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.testimonial-card {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-lg);
+	padding: var(--space-md);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-md);
+	transition: border-color var(--transition-speed) var(--transition-ease);
+}
+
+.testimonial-card:hover {
+	border-color: var(--color-border-strong);
+}
+
+.testimonial-card__text {
+	font-size: var(--text-body);
+	line-height: 1.6;
+	color: var(--color-text);
+	margin: 0;
+	white-space: pre-line;
+}
+
+.testimonial-card__author {
+	margin-top: auto;
+	padding-top: var(--space-sm);
+	border-top: 1px solid var(--color-border);
+	display: flex;
+	align-items: center;
+	gap: var(--space-sm);
+}
+
+.testimonial-card__avatar {
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 1px solid var(--color-border-strong);
+}
+
+.testimonial-card__author-info {
+	display: flex;
+	flex-direction: column;
+}
+
+.testimonial-card__name {
+	font-weight: 500;
+	color: var(--color-text);
+	font-style: normal;
+	font-size: 1rem;
+}
+
+.testimonial-card__company {
+	font-size: 0.875rem;
+	color: var(--color-text-light);
+}
+
+/* ============================================
+   Anteckningar - kort (startsidan och arkiv)
+   ============================================ */
+.blog-section {
+	background-color: var(--color-background);
+	padding: var(--space-xl) 0;
+}
+
+.blog__grid {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: var(--space-md);
+	margin-top: var(--space-lg);
+}
+
+.blog-card {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-lg);
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	transition: border-color var(--transition-speed) var(--transition-ease);
+}
+
+.blog-card:hover {
+	border-color: var(--color-border-strong);
+}
+
+.blog-card__image {
+	display: block;
+	aspect-ratio: 16 / 9;
+	overflow: hidden;
+	background-color: var(--color-dark-tertiary);
+}
+
+.blog-card__image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.blog-card__content {
+	padding: var(--space-md);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xs);
+	flex: 1;
+}
+
+.blog-card__meta {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	font-size: 0.875rem;
+	color: var(--color-text-light);
+}
+
+.blog-card__categories a {
+	display: inline-block;
+	padding: 3px 12px;
+	background: rgba(224, 178, 122, 0.1);
+	border: 1px solid rgba(224, 178, 122, 0.35);
+	border-radius: 50px;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: var(--color-accent);
+}
+
+.blog-card__categories a:hover {
+	background: rgba(224, 178, 122, 0.2);
+}
+
+.blog-card__date {
+	font-size: 0.875rem;
+	color: var(--color-text-light);
+}
+
+.blog-card__separator {
+	color: var(--color-text-muted);
+}
+
+.blog-card__reading-time {
+	font-size: 0.875rem;
+	color: var(--color-text-light);
+}
+
+.blog-card__title {
+	font-size: var(--text-h3);
+	margin: var(--space-xs) 0;
+	line-height: 1.3;
+}
+
+.blog-card__title a {
+	color: var(--color-text);
+}
+
+.blog-card__title a:hover {
+	color: var(--color-accent);
+}
+
+.blog-card__excerpt {
+	font-size: var(--text-small);
+	color: var(--color-text-light);
+	line-height: 1.6;
+	margin: 0;
+}
+
+.blog-card__read-more {
+	margin-top: auto;
+	padding-top: var(--space-xs);
+	font-size: 1rem;
+	font-weight: 500;
+	color: var(--color-accent);
+}
+
+.blog-card__read-more:hover {
+	color: var(--color-text);
+}
+
+.blog-section__footer {
+	text-align: center;
+	margin-top: var(--space-lg);
+}
+
+@media (max-width: 1024px) {
+	.blog__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (max-width: 768px) {
+	.blog__grid {
+		grid-template-columns: 1fr;
+	}
+}
+
+/* ============================================
+   Om mig
+   ============================================ */
+.about-section {
+	background-color: var(--color-background);
+	padding: var(--space-xl) 0;
+}
+
+.about__grid {
+	display: grid;
+	grid-template-columns: 2fr 3fr;
+	gap: var(--space-xl);
+	align-items: start;
+}
+
+.about__image img {
+	width: 100%;
+	height: auto;
+	border-radius: var(--border-radius-lg);
+}
+
+.about__content h2 {
+	font-size: var(--text-h2);
+	text-align: left;
+	margin-bottom: var(--space-md);
+}
+
+.about__text {
+	font-size: var(--text-body);
+	line-height: 1.6;
+	color: var(--color-text-light);
+	margin-bottom: var(--space-md);
+}
+
+.about__text p {
+	margin-bottom: var(--space-sm);
+}
+
+.about__skills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: var(--space-md);
+}
+
+.skill-tag {
+	display: inline-block;
+	padding: 6px 16px;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid var(--color-border-strong);
+	border-radius: 50px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--color-text-light);
+}
+
+/* Bakgrund: andra raden i Om mig, samma tv�kolumnsgrid som bild och text.
+   Punktmarkeringen bygger p� listorna i tj�nstekorten. */
+.about__grid--background {
+	margin-top: var(--space-lg);
+	align-items: start;
+}
+
+.about__background-title {
+	font-size: var(--text-h3);
+	margin-bottom: var(--space-sm);
+}
+
+.about__background-intro p {
+	font-size: var(--text-body);
+	line-height: 1.6;
+	color: var(--color-text-light);
+	margin-bottom: var(--space-sm);
+}
+
+.timeline {
+	list-style: none;
+	margin: 0 0 var(--space-md);
+	padding: 0;
+	border-left: 1px solid var(--color-border-strong);
+}
+
+.timeline__item {
+	position: relative;
+	padding-left: 24px;
+	margin-bottom: var(--space-sm);
+}
+
+.timeline__item::before {
+	content: '';
+	position: absolute;
+	left: -4px;
+	top: 0.75em;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background-color: var(--color-accent);
+}
+
+.timeline__meta {
+	margin: 0;
+	font-size: var(--text-body);
+	line-height: 1.5;
+	max-width: none;
+}
+
+.timeline__year {
+	color: var(--color-text-light);
+	white-space: nowrap;
+	font-variant-numeric: tabular-nums;
+	margin-right: 6px;
+}
+
+.timeline__org {
+	color: var(--color-text);
+	font-weight: 500;
+}
+
+.timeline__sep,
+.timeline__role {
+	color: var(--color-text-light);
+}
+
+.timeline__text {
+	margin: 4px 0 0;
+	font-size: var(--text-small);
+	line-height: 1.6;
+	color: var(--color-text-light);
+	max-width: 58ch;
+}
+
+.about__facts {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-md);
+	padding-left: 24px;
+}
+
+.about__fact h4 {
+	font-size: 1rem;
+	font-weight: 500;
+	color: var(--color-text);
+	margin-bottom: var(--space-xs);
+}
+
+.about__fact ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.about__fact li,
+.about__fact p {
+	font-size: var(--text-small);
+	line-height: 1.6;
+	color: var(--color-text-light);
+	margin-bottom: 6px;
+}
+
+@media (max-width: 900px) {
+	.about__grid {
+		grid-template-columns: 1fr;
+		gap: var(--space-lg);
+	}
+
+	.about__image {
+		max-width: 420px;
+		margin: 0 auto;
+	}
+
+	.about__content h2 {
+		text-align: center;
+	}
+
+	.about__grid--background {
+		margin-top: var(--space-md);
+	}
+
+	.about__background-title {
+		text-align: center;
+	}
+
+	.about__facts {
+		grid-template-columns: 1fr;
+	}
+
+	/* Roll på egen rad på mobil, år och organisation håller ihop */
+	.timeline__sep {
+		display: none;
+	}
+
+	.timeline__role {
+		display: block;
+	}
+
+	.about__skills {
+		justify-content: center;
+	}
+}
+
+/* ============================================
+   Kontakt
+   ============================================ */
+.contact-section {
+	background-color: var(--color-background);
+	padding: var(--space-xl) 0;
+}
+
+.contact__links {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-sm);
+	margin-top: var(--space-lg);
+}
+
+.contact__link {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	font-size: var(--text-lead);
+	font-weight: 500;
+	color: var(--color-text);
+}
+
+.contact__link:hover {
+	color: var(--color-accent);
+}
+
+.contact__link svg {
+	width: 22px;
+	height: 22px;
+	color: var(--color-accent);
+	flex-shrink: 0;
+}
+
+.contact__address {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	font-size: 1rem;
+	color: var(--color-text-light);
+}
+
+.contact__address svg {
+	width: 18px;
+	height: 18px;
+	flex-shrink: 0;
+}
+
+/* ============================================
+   Sidfot
+   ============================================ */
+.site-footer {
+	background-color: var(--color-background);
+	padding: var(--space-lg) 0;
+	border-top: 1px solid var(--color-border);
+}
+
+.footer__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-sm);
+	text-align: center;
+}
+
+.footer__logo img {
+	max-height: 40px;
+	width: auto;
+}
+
+.footer__tagline {
+	font-size: 1rem;
+	color: var(--color-text-light);
+	margin: 0;
+}
+
+.footer__nav ul {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--space-sm) var(--space-md);
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.footer__nav a {
+	font-size: 0.9375rem;
+	color: var(--color-text-light);
+}
+
+.footer__nav a:hover {
+	color: var(--color-accent);
+}
+
+.footer__copyright {
+	font-size: 0.875rem;
+	color: var(--color-text-muted);
+	margin: 0;
+}
+
+/* ============================================
+   Arkiv och undersidor
+   ============================================ */
+.main-content {
+	padding-top: var(--header-height);
+}
+
+.page-header {
+	padding: var(--space-lg) 0 var(--space-md);
+}
+
+.page-header__title {
+	font-size: var(--text-h2);
+	margin-bottom: var(--space-sm);
+}
+
+.page-header__description {
+	font-size: var(--text-lead);
+	color: var(--color-text-light);
+	max-width: 58ch;
+}
+
+/* Kategorifilter */
+.category-filter {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: var(--space-md);
+}
+
+.category-filter a {
+	display: inline-block;
+	padding: 6px 18px;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid var(--color-border-strong);
+	border-radius: 50px;
+	font-size: 0.9375rem;
+	font-weight: 500;
+	color: var(--color-text-light);
+}
+
+.category-filter a:hover {
+	color: var(--color-accent);
+	border-color: var(--color-accent);
+}
+
+.category-filter a.is-active {
+	background: var(--color-accent);
+	border-color: var(--color-accent);
+	color: var(--color-on-accent);
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+	margin-bottom: var(--space-md);
+}
+
+.breadcrumbs__list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size: 0.875rem;
+	color: var(--color-text-light);
+}
+
+.breadcrumbs__item:not(:last-child)::after {
+	content: '/';
+	margin-left: 6px;
+	color: var(--color-text-muted);
+}
+
+.breadcrumbs__item a {
+	color: var(--color-text-light);
+}
+
+.breadcrumbs__item a:hover {
+	color: var(--color-accent);
+}
+
+/* Pagination */
+.pagination {
+	margin-top: var(--space-lg);
+}
+
+.pagination .page-numbers {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.pagination .page-numbers li a,
+.pagination .page-numbers li span {
+	display: inline-block;
+	padding: 8px 16px;
+	border: 1px solid var(--color-border-strong);
+	border-radius: var(--border-radius);
+	font-size: 0.9375rem;
+	color: var(--color-text-light);
+}
+
+.pagination .page-numbers li a:hover {
+	border-color: var(--color-accent);
+	color: var(--color-accent);
+}
+
+.pagination .page-numbers li span.current {
+	background: var(--color-accent);
+	border-color: var(--color-accent);
+	color: var(--color-on-accent);
+}
+
+/* ============================================
+   Enskilt inlägg
+   ============================================ */
+.blog-post__header {
+	padding: var(--space-lg) 0 var(--space-md);
+}
+
+.blog-post__categories {
+	margin-bottom: var(--space-sm);
+}
+
+.blog-post__categories a {
+	display: inline-block;
+	padding: 3px 12px;
+	background: rgba(224, 178, 122, 0.1);
+	border: 1px solid rgba(224, 178, 122, 0.35);
+	border-radius: 50px;
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: var(--color-accent);
+	margin-right: 6px;
+}
+
+.blog-post__title {
+	font-size: clamp(2rem, 4vw, 3rem);
+	line-height: 1.1;
+	margin-bottom: var(--space-sm);
+	max-width: 25ch;
+}
+
+.blog-post__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	font-size: 0.9375rem;
+	color: var(--color-text-light);
+}
+
+.blog-post__featured-image {
+	margin: var(--space-md) 0;
+}
+
+.blog-post__featured-image img {
+	width: 100%;
+	height: auto;
+	border-radius: var(--border-radius-lg);
+}
+
+.blog-post__content {
+	padding: var(--space-md) 0 var(--space-lg);
+}
+
+.blog-post__content > .container--narrow > * {
+	max-width: 65ch;
+}
+
+.blog-post__content h2 {
+	font-size: 1.75rem;
+	margin-top: var(--space-lg);
+	margin-bottom: var(--space-sm);
+}
+
+.blog-post__content h3 {
+	margin-top: var(--space-md);
+	margin-bottom: var(--space-sm);
+}
+
+.blog-post__content p,
+.blog-post__content li {
+	font-size: var(--text-body);
+	line-height: 1.6;
+	color: var(--color-text-light);
+}
+
+.blog-post__content ul,
+.blog-post__content ol {
+	margin: 0 0 var(--space-sm) 1.25rem;
+}
+
+.blog-post__content li {
+	margin-bottom: 8px;
+}
+
+.blog-post__content blockquote {
+	border-left: 3px solid var(--color-accent);
+	padding-left: var(--space-md);
+	margin: var(--space-md) 0;
+	font-style: italic;
+	color: var(--color-text);
+}
+
+.blog-post__content img {
+	max-width: 100%;
+	height: auto;
+	border-radius: var(--border-radius);
+}
+
+/* Kodblock */
+.blog-post__content pre,
+.blog-post__content .wp-block-code {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius);
+	padding: var(--space-sm) var(--space-md);
+	overflow-x: auto;
+	margin: var(--space-md) 0;
+	max-width: 100%;
+}
+
+.blog-post__content pre code {
+	font-size: 0.9375rem;
+	line-height: 1.6;
+	color: var(--color-text);
+	background: none;
+	padding: 0;
+}
+
+.blog-post__content code {
+	font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+	font-size: 0.9em;
+	background: var(--color-surface);
+	padding: 2px 6px;
+	border-radius: 4px;
+	color: var(--color-accent);
+}
+
+/* Taggar under inlägg */
+.blog-post__tags {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	padding-bottom: var(--space-md);
+}
+
+.blog-post__tags-label {
+	font-size: 0.9375rem;
+	color: var(--color-text-light);
+}
+
+.blog-post__tags a {
+	display: inline-block;
+	padding: 4px 14px;
+	background: rgba(255, 255, 255, 0.04);
+	border: 1px solid var(--color-border-strong);
+	border-radius: 50px;
+	font-size: 0.8125rem;
+	color: var(--color-text-light);
+}
+
+.blog-post__tags a:hover {
+	color: var(--color-accent);
+	border-color: var(--color-accent);
+}
+
+/* Författarblock */
+.author-box {
+	padding: var(--space-md) 0;
+}
+
+.author-box__content {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-lg);
+	padding: var(--space-md);
+	display: flex;
+	align-items: center;
+	gap: var(--space-md);
+}
+
+.author-box__avatar img {
+	border-radius: 50%;
+	width: 88px;
+	height: 88px;
+	object-fit: cover;
+}
+
+.author-box__name {
+	font-size: 1.25rem;
+	margin-bottom: var(--space-xs);
+}
+
+.author-box__bio {
+	font-size: var(--text-small);
+	color: var(--color-text-light);
+	margin-bottom: var(--space-sm);
+}
+
+@media (max-width: 600px) {
+	.author-box__content {
+		flex-direction: column;
+		text-align: center;
+	}
+}
+
+/* CTA-block i inlägg */
+.post-cta {
+	padding: var(--space-md) 0 var(--space-lg);
+}
+
+.post-cta__content {
+	background: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--border-radius-lg);
+	padding: var(--space-lg) var(--space-md);
+	text-align: center;
+}
+
+.post-cta__title {
+	font-size: var(--text-h3);
+	margin-bottom: var(--space-sm);
+}
+
+.post-cta__text {
+	color: var(--color-text-light);
+	max-width: 50ch;
+	margin: 0 auto var(--space-md);
+}
+
+/* Relaterade inlägg */
+.related-posts {
+	border-top: 1px solid var(--color-border);
+}
+
+/* Inläggsnavigering */
+.post-navigation {
+	padding: var(--space-md) 0;
+	border-top: 1px solid var(--color-border);
+}
+
+.post-navigation .nav-links {
+	display: flex;
+	justify-content: space-between;
+	gap: var(--space-md);
+	max-width: var(--container-width);
+	margin: 0 auto;
+	padding: 0 var(--space-md);
+}
+
+.post-navigation .nav-subtitle {
+	display: block;
+	font-size: 0.875rem;
+	color: var(--color-text-light);
+}
+
+.post-navigation .nav-title {
+	font-weight: 500;
+}
+
+/* ============================================
+   Scroll Animations
+   ============================================ */
+@media (prefers-reduced-motion: no-preference) {
+	[data-animate] {
+		opacity: 0;
+		transition: opacity 0.8s var(--transition-ease), transform 0.8s var(--transition-ease);
+	}
+
+	[data-animate].is-visible {
+		opacity: 1;
+	}
+
+	[data-animate="fade-up"] {
+		transform: translateY(40px);
+	}
+
+	[data-animate="fade-up"].is-visible {
+		transform: translateY(0);
+	}
+
+	[data-animate="slide-from-left"] {
+		transform: translateX(-40px);
+	}
+
+	[data-animate="slide-from-left"].is-visible {
+		transform: translateX(0);
+	}
+
+	[data-animate="slide-from-right"] {
+		transform: translateX(40px);
+	}
+
+	[data-animate="slide-from-right"].is-visible {
+		transform: translateX(0);
+	}
+
+	[data-animate-delay="100"] { transition-delay: 0.1s; }
+	[data-animate-delay="150"] { transition-delay: 0.15s; }
+	[data-animate-delay="200"] { transition-delay: 0.2s; }
+	[data-animate-delay="300"] { transition-delay: 0.3s; }
+	[data-animate-delay="350"] { transition-delay: 0.35s; }
+	[data-animate-delay="400"] { transition-delay: 0.4s; }
+	[data-animate-delay="500"] { transition-delay: 0.5s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	[data-animate] {
+		opacity: 1;
+		transform: none;
+	}
+
+	.hero__background img {
+		transform: none !important;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+.visually-hidden,
+.screen-reader-text {
+	position: absolute !important;
+	width: 1px !important;
+	height: 1px !important;
+	padding: 0 !important;
+	margin: -1px !important;
+	overflow: hidden !important;
+	clip: rect(0, 0, 0, 0) !important;
+	white-space: nowrap !important;
+	border: 0 !important;
+}
+
+.skip-link {
+	position: absolute;
+	top: -48px;
+	left: 0;
+	background: var(--color-accent);
+	color: var(--color-on-accent);
+	padding: 10px 18px;
+	text-decoration: none;
+	z-index: 10000;
+	font-weight: 500;
+	border-radius: 0 0 var(--border-radius) 0;
+	transition: top 0.2s ease;
+}
+
+.skip-link:focus {
+	top: 0;
+}
+
+/* ============================================
+   Mobile fixes
+   ============================================ */
+@media (max-width: 768px) {
+	img {
+		max-width: 100%;
+		height: auto;
+	}
+
+	.hero__content {
+		padding: var(--space-sm);
+	}
+}
