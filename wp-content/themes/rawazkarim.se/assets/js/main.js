@@ -101,9 +101,64 @@
 		});
 	}
 
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', initMobileMenu);
-	} else {
+	/**
+	 * Projektkarusell: knapparna bläddrar ett kort i taget och roterar runt
+	 * vid ändarna. Touch och trackpad scrollar spåret direkt.
+	 */
+	function initPortfolioCarousel() {
+		var track = document.getElementById('portfolio-track');
+		if (!track) {
+			return;
+		}
+		var prev = document.querySelector('[data-carousel-prev]');
+		var next = document.querySelector('[data-carousel-next]');
+		var cards = track.querySelectorAll('.portfolio-card');
+		if (!prev || !next || cards.length < 2) {
+			return;
+		}
+
+		function step() {
+			var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+			return cards[0].getBoundingClientRect().width + gap;
+		}
+
+		function maxScroll() {
+			return track.scrollWidth - track.clientWidth;
+		}
+
+		function currentIndex() {
+			return Math.round(track.scrollLeft / step());
+		}
+
+		function goTo(left) {
+			track.scrollTo({ left: left, top: 0 });
+		}
+
+		next.addEventListener('click', function() {
+			if (track.scrollLeft >= maxScroll() - 2) {
+				goTo(0);
+			} else {
+				goTo(Math.min(maxScroll(), (currentIndex() + 1) * step()));
+			}
+		});
+
+		prev.addEventListener('click', function() {
+			if (track.scrollLeft <= 2) {
+				goTo(maxScroll());
+			} else {
+				goTo(Math.max(0, (currentIndex() - 1) * step()));
+			}
+		});
+	}
+
+	function init() {
 		initMobileMenu();
+		initPortfolioCarousel();
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', init);
+	} else {
+		init();
 	}
 })();

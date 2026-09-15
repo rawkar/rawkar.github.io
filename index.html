@@ -304,14 +304,42 @@
 				Ett urval av det jag arbetat med.			</p>
 		</div>
 
-		<div class="portfolio__grid">
+		<div class="portfolio__carousel">
+			<button type="button" class="portfolio__nav-btn portfolio__nav-btn--prev" data-carousel-prev aria-controls="portfolio-track" aria-label="Föregående projekt">
+				<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+			</button>
+		<div class="portfolio__track" id="portfolio-track" aria-label="Projekt, bläddra i sidled">
 							<article class="portfolio-card" data-animate="fade-up" data-animate-delay="100">
+					<div class="portfolio-card__image-wrapper">
+													<img src="https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/trs-1200.webp" srcset="https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/trs-800.webp 800w, https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/trs-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 33vw" width="1200" height="532" alt="Startsidan på trs.se" class="portfolio-card__image" loading="lazy">
+											</div>
+					<div class="portfolio-card__content">
+						<h3 class="portfolio-card__title">Trygghetsrådet TRS</h3>
+												<p class="portfolio-card__description">Strategisk och operativ kommunikatör med ansvar för webb, nyhetsbrev, sociala medier och kampanjer mot flera målgrupper. Ledde webbprojekt från kravställning till lansering, tog fram kommunikationsplaner, var kommunikationsrådgivare och projektkommunikatör i verksamhetens utvecklingsprojekt.</p>
+													<div class="portfolio-card__tags">
+																	<span class="tag-pill">Kommunikationsstrategi</span>
+																	<span class="tag-pill">Webbprojekt</span>
+																	<span class="tag-pill">Innehåll</span>
+																	<span class="tag-pill">Webbanalys</span>
+															</div>
+																			<p class="portfolio-card__link">
+								<a href="https://trs.se/" class="link-arrow" target="_blank" rel="noopener noreferrer">
+									Besök webbplatsen									<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+										<line x1="5" y1="12" x2="19" y2="12"></line>
+										<polyline points="12 5 19 12 12 19"></polyline>
+									</svg>
+									<span class="screen-reader-text">Trygghetsrådet TRS, öppnas i ny flik</span>
+								</a>
+							</p>
+											</div>
+				</article>
+								<article class="portfolio-card" data-animate="fade-up" data-animate-delay="200">
 					<div class="portfolio-card__image-wrapper">
 													<img src="https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/verksamhetsrapport-1200.webp" srcset="https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/verksamhetsrapport-800.webp 800w, https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/verksamhetsrapport-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 33vw" width="1200" height="702" alt="Skärmbild av verksamhetsrapport.se" class="portfolio-card__image" loading="lazy">
 											</div>
 					<div class="portfolio-card__content">
 						<h3 class="portfolio-card__title">verksamhetsrapport.se</h3>
-						<p class="portfolio-card__description">En digital tjänst som hjälper föreningar och organisationer att ta fram sin verksamhetsberättelse. Idé, koncept, texter, design, utveckling och lansering.</p>
+												<p class="portfolio-card__description">Egen digital tjänst som hjälper föreningar och organisationer att ta fram sin verksamhetsberättelse. Jag har gjort allt från idé och koncept till texter, design och utveckling. Tjänsten guidar användaren steg för steg och levererar en färdig rapport att lämna till årsmötet. Byggd och lanserad på egen hand.</p>
 													<div class="portfolio-card__tags">
 																	<span class="tag-pill">Koncept</span>
 																	<span class="tag-pill">Copy</span>
@@ -328,13 +356,13 @@
 							</p>
 											</div>
 				</article>
-								<article class="portfolio-card" data-animate="fade-up" data-animate-delay="200">
+								<article class="portfolio-card" data-animate="fade-up" data-animate-delay="300">
 					<div class="portfolio-card__image-wrapper">
 													<img src="https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/wolf-creative-1200.webp" srcset="https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/wolf-creative-800.webp 800w, https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/wolf-creative-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 33vw" width="1200" height="744" alt="Skärmbild av Wolf Creative" class="portfolio-card__image" loading="lazy">
 											</div>
 					<div class="portfolio-card__content">
 						<h3 class="portfolio-card__title">Wolf Creative</h3>
-						<p class="portfolio-card__description">Ny webbplats för en art director och grafiker. Struktur, texter, design och WordPress.</p>
+												<p class="portfolio-card__description">Ny webbplats för en art director och grafiker som behövde visa sitt arbete utan att fastna i teknik. Struktur och sidflöde, texter, design och en WordPress-lösning som hon uppdaterar själv. Fokus på att låta bilderna bära och att sajten laddar snabbt på mobil.</p>
 													<div class="portfolio-card__tags">
 																	<span class="tag-pill">Webbplats</span>
 																	<span class="tag-pill">WordPress</span>
@@ -351,13 +379,13 @@
 							</p>
 											</div>
 				</article>
-								<article class="portfolio-card" data-animate="fade-up" data-animate-delay="300">
+								<article class="portfolio-card" data-animate="fade-up" data-animate-delay="400">
 					<div class="portfolio-card__image-wrapper">
 													<img src="https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/linda-1200.webp" srcset="https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/linda-800.webp 800w, https://rkkommunikation.se/wp-content/themes/rawazkarim.se/assets/Portfolio-bilder/linda-1200.webp 1200w" sizes="(max-width: 768px) 100vw, 33vw" width="1200" height="633" alt="Skärmbild av Linda Jägerström" class="portfolio-card__image" loading="lazy">
 											</div>
 					<div class="portfolio-card__content">
 						<h3 class="portfolio-card__title">Linda Jägerström</h3>
-						<p class="portfolio-card__description">Portfoliosajt för en stylist. Fokus på bildvisning, snabbhet och enkel uppdatering.</p>
+												<p class="portfolio-card__description">Portfoliosajt för en stylist i Stockholm. Struktur, bildflöden och en WordPress-lösning som är enkel att fylla på med nya jobb. Fokus på bildvisning, snabbhet och att sajten fungerar lika bra på mobil som på desktop. Löpande förvaltning och uppdateringar efter lansering.</p>
 													<div class="portfolio-card__tags">
 																	<span class="tag-pill">Webbplats</span>
 																	<span class="tag-pill">WordPress</span>
@@ -375,6 +403,11 @@
 											</div>
 				</article>
 						</div>
+
+			<button type="button" class="portfolio__nav-btn portfolio__nav-btn--next" data-carousel-next aria-controls="portfolio-track" aria-label="Nästa projekt">
+				<svg viewbox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+			</button>
+		</div>
 	</div>
 </section>
 

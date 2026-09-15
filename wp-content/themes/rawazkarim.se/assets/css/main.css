@@ -858,11 +858,80 @@ textarea:focus-visible {
 	padding: var(--space-xl) 0;
 }
 
-.portfolio__grid {
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: var(--space-md);
+/* Karusell: tre kort synliga på desktop, bläddring i sidled med knappar eller touch */
+.portfolio__carousel {
 	margin-top: var(--space-lg);
+}
+
+.portfolio__track {
+	--carousel-columns: 3;
+	--carousel-gap: var(--space-md);
+	display: grid;
+	grid-auto-flow: column;
+	grid-auto-columns: calc((100% - (var(--carousel-columns) - 1) * var(--carousel-gap)) / var(--carousel-columns));
+	gap: var(--carousel-gap);
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	padding-bottom: 4px;
+}
+
+.portfolio__track::-webkit-scrollbar {
+	display: none;
+}
+
+.portfolio__track > .portfolio-card {
+	scroll-snap-align: start;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.portfolio__track {
+		scroll-behavior: smooth;
+	}
+}
+
+/* Pilar på varsin sida om blocket, halvvägs utanför kortkanten */
+.portfolio__carousel {
+	position: relative;
+}
+
+.portfolio__nav-btn {
+	position: absolute;
+	top: 50%;
+	z-index: 2;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 50%;
+	border: 1px solid var(--color-border-strong);
+	background: var(--color-surface);
+	color: var(--color-text);
+	cursor: pointer;
+	box-shadow: var(--shadow-md);
+	transition: border-color var(--transition-speed), color var(--transition-speed);
+}
+
+.portfolio__nav-btn--prev {
+	left: 0;
+	transform: translate(-50%, -50%);
+}
+
+.portfolio__nav-btn--next {
+	right: 0;
+	transform: translate(50%, -50%);
+}
+
+.portfolio__nav-btn:hover {
+	border-color: var(--color-accent);
+	color: var(--color-accent);
+}
+
+.portfolio__nav-btn svg {
+	width: 20px;
+	height: 20px;
 }
 
 .portfolio-card {
@@ -918,6 +987,13 @@ textarea:focus-visible {
 	margin: 0;
 }
 
+/* Roll eller period under rubriken, till exempel en anställning */
+.portfolio-card__meta {
+	font-size: var(--text-small);
+	color: var(--color-text-light);
+	margin: calc(-1 * var(--space-xs)) 0 0;
+}
+
 .portfolio-card__description {
 	font-size: var(--text-small);
 	color: var(--color-text-light);
@@ -925,10 +1001,16 @@ textarea:focus-visible {
 	margin: 0;
 }
 
+/* Taggar och länk längst ner i kortet oavsett textlängd */
 .portfolio-card__tags {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;
+	margin-top: auto;
+}
+
+.portfolio-card__tags + .portfolio-card__link {
+	margin-top: 0;
 }
 
 .portfolio-card__link {
@@ -937,14 +1019,15 @@ textarea:focus-visible {
 }
 
 @media (max-width: 1024px) {
-	.portfolio__grid {
-		grid-template-columns: repeat(2, 1fr);
+	.portfolio__track {
+		--carousel-columns: 2;
 	}
 }
 
 @media (max-width: 768px) {
-	.portfolio__grid {
-		grid-template-columns: 1fr;
+	.portfolio__track {
+		--carousel-columns: 1;
+		grid-auto-columns: 88%;
 	}
 }
 
@@ -1216,8 +1299,8 @@ textarea:focus-visible {
 	color: var(--color-text-light);
 }
 
-/* Bakgrund: andra raden i Om mig, samma tv�kolumnsgrid som bild och text.
-   Punktmarkeringen bygger p� listorna i tj�nstekorten. */
+/* Bakgrund: andra raden i Om mig, samma tv�kolumnsgrid som bild och text.
+   Punktmarkeringen bygger p� listorna i tj�nstekorten. */
 .about__grid--background {
 	margin-top: var(--space-lg);
 	align-items: start;
